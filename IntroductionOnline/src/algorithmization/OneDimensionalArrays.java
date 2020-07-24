@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 
 public class OneDimensionalArrays {
 
-    final static int N = 10;
+    final static int N = 10; //size of arrays
 
     /**
      * Task 1. Find the sum of elements, that dividing by K
@@ -22,7 +22,7 @@ public class OneDimensionalArrays {
     public static void sumElementsDivideByNumber(int[] array, int k) {
         System.out.println("-----------------------------------------------");
         System.out.println("[Task 1] Sum of elements dividing by K");
-        System.out.println("Original array : " + Arrays.toString(array));
+        System.out.println("Original array: " + Arrays.toString(array));
         System.out.println("Specific K = " + k);
         System.out.println("Sum = " + IntStream.of(array).filter(e -> e % k == 0).sum());
         System.out.println("-----------------------------------------------");
@@ -50,7 +50,7 @@ public class OneDimensionalArrays {
 
     public static void countOfPositiveNegativeZero(int[] array) {
         System.out.println("[Task 3] Positive, negative, zeroes");
-        System.out.println("Original array : " + Arrays.toString(array));
+        System.out.println("Original array: " + Arrays.toString(array));
         int countPositive = (int) IntStream.of(array).filter(e -> e > 0).count();
         int countNegative = (int) IntStream.of(array).filter(e -> e < 0).count();
         int countZero = (int) IntStream.of(array).filter(e -> e == 0).count();
@@ -65,7 +65,7 @@ public class OneDimensionalArrays {
 
     public static void swapMaxMin(int[] array) {
         System.out.println("[Task 4] Swap max and min elements in array");
-        System.out.println("Original array : " + Arrays.toString(array));
+        System.out.println("Original array: " + Arrays.toString(array));
 
         int max = IntStream.of(array).max().orElse(0);
         int min = IntStream.of(array).min().orElse(0);
@@ -79,7 +79,7 @@ public class OneDimensionalArrays {
                 array[i] = min;
             }
         }
-        System.out.println("Modifying array : " + Arrays.toString(array));
+        System.out.println("Modified array: " + Arrays.toString(array));
         System.out.println("-----------------------------------------------");
     }
 
@@ -103,13 +103,13 @@ public class OneDimensionalArrays {
 
     /**
      * Task 6. Sum of elements with prime index
-     * <p>
+     *
      * But we can use the simple list of prime numbers. Over 500 numbers was founded. Not enough?
      */
 
     public static void sumElementsWithPrimeIndex(double[] array) {
         System.out.println("[Task 6] Sum with prime index: ");
-        System.out.println("Original array : " + Arrays.toString(array));
+        System.out.println("Original array: " + Arrays.toString(array));
         double sum = 0;
         StringBuilder sb = new StringBuilder("Prime index are:");
         for (int n = 3; n <= array.length; n++) {
@@ -136,12 +136,12 @@ public class OneDimensionalArrays {
 
     public static void maxFromNewSequence(int[] array) {
         System.out.println("[Task 7] Find max from new sequence: ");
-        System.out.println("Original sequence : " + Arrays.toString(array));
+        System.out.println("Original sequence: " + Arrays.toString(array));
         int[] newSequence = new int[array.length - 1];
         for (int i = 1; i < array.length; i++) {
             newSequence[i - 1] = array[i - 1] + array[i];
         }
-        System.out.println("New generating sequence : " + Arrays.toString(newSequence));
+        System.out.println("New generating sequence: " + Arrays.toString(newSequence));
         System.out.println("Max element = " + IntStream.of(newSequence).max().orElse(0));
         System.out.println("-----------------------------------------------");
     }
@@ -154,7 +154,7 @@ public class OneDimensionalArrays {
 
     public static void dropMinElements(int[] array) {
         System.out.println("[Task 8] Drop min sequence: ");
-        System.out.println("Original sequence : " + Arrays.toString(array));
+        System.out.println("Original sequence: " + Arrays.toString(array));
         int min = IntStream.of(array).min().orElse(0);
         System.out.println("Sequence without min element: " + Arrays
             .toString(IntStream.of(array).filter(e -> e != min).toArray()));
@@ -167,7 +167,7 @@ public class OneDimensionalArrays {
 
     public static void findMaxFrequency(int[] array) {
         System.out.println("[Task 9] Calculate max frequency of elements: ");
-        System.out.println("Original sequence : " + Arrays.toString(array));
+        System.out.println("Original sequence: " + Arrays.toString(array));
         List<Integer> list = IntStream.of(array).boxed().collect(Collectors.toList());
         HashMap<Integer, Integer> mapFreq = new HashMap<>();
         for (int value : array) {
@@ -199,7 +199,7 @@ public class OneDimensionalArrays {
 
     public static void dropEvenElements(int[] array) {
         System.out.println("[Task 10] Drop even elements ");
-        System.out.println("Original sequence : " + Arrays.toString(array));
+        System.out.println("Original sequence: " + Arrays.toString(array));
         int c = array.length % 2 == 0 ? array.length / 2 : array.length / 2 + 1;
         for (int i = 1; i < array.length; i++) {
             if (i < c) {
@@ -208,7 +208,7 @@ public class OneDimensionalArrays {
                 array[i] = 0;
             }
         }
-        System.out.println("Modified array :" + Arrays.toString(array));
+        System.out.println("Modified array: " + Arrays.toString(array));
         System.out.println("-----------------------------------------------");
     }
 
