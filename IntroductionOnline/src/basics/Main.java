@@ -40,23 +40,24 @@ public class Main {
      *
      * @param x angle in radians
      * @param y angle in radians
-     * @return value of expression or null, if x = y = Pi/4
+     * @return value of expression or null, if denominator = 0
      */
 
     public static Double calculateValueP1T3(double x, double y) {
-        return Math.abs(x - Math.PI / 4) < EPSILON && Math.abs(y - Math.PI / 4) < EPSILON ? null
-            : (Math.sin(x) + Math.cos(y)) / (Math.cos(x) - Math.sin(y)) * Math.tan(x * y);
+        double denominator = Math.cos(x) - Math.sin(y);
+        return denominator < EPSILON ? null
+            : (Math.sin(x) + Math.cos(y)) / (denominator) * Math.tan(x * y);
     }
 
     /**
-     * Task 1.4. Swap the integer amd decimal parts of number
+     * Task 1.4. Swap the integer and decimal parts of number
      *
      * @param number in nnn.ddd format
      * @return number like ddd.nnn
      */
 
     public static double swapIntegerWithDecimal(double number) {
-        double scale = 1000;
+        double scale = Math.pow(10, ("" + number).split("\\.")[1].length());
         return Math.round((int) number + (number - (int) number) * scale * scale) / scale;
     }
 
@@ -116,19 +117,23 @@ public class Main {
     public static boolean isThreePointsOnLine(double x1, double y1, double x2, double y2, double x3, double y3) {
         double k = (y1 - y2) / (x1 - x2);
         double b = y1 - k * x1;
-        return x1 != x2 && (y3 - k * x3 + b) < EPSILON;
+        return x1 - x2 > EPSILON && (y3 - k * x3 + b) < EPSILON;
     }
 
     /**
-     * Task 2.4 Can the brick move though hole?
+     * Task 2.4 Can the brick move through hole?
      *
      * @param a     size of hole
      * @param b     size of hole
      * @param sizes sizes of brick
      * @return true, if brick can move through hole, false - otherwise
+     * @throws IllegalArgumentException if parameters <=0
      */
 
-    public static boolean brickThroughHole(int a, int b, int... sizes) {
+    public static boolean brickThroughHole(int a, int b, int... sizes) throws IllegalArgumentException {
+        if (sizes.length != 3 || a <= 0 || b <= 0 || sizes[0] <= 0 || sizes[1] <= 0 || sizes[2] <= 0) {
+            throw new IllegalArgumentException();
+        }
         a = a > b ? a + b - (b = a) : a;
         Arrays.sort(sizes);
         return a >= sizes[0] && b >= sizes[1];
@@ -153,12 +158,15 @@ public class Main {
      */
 
     public static int sumOfConsecutiveNumbers() {
-        System.out.println("Sum of consecutive numbers \nEnter positive integer number grather 1: ");
+        System.out.println("Sum of consecutive numbers \nEnter positive integer number greater 1: ");
         Scanner scanner = new Scanner(System.in);
         int border;
         while (true) {
             try {
                 border = Integer.parseInt(scanner.nextLine());
+                if (border <= 1) {
+                    throw new NumberFormatException();
+                }
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong format number. Please, repeat:");
@@ -191,7 +199,7 @@ public class Main {
     /**
      * Task 3.3 Sum of squares from 1 to n
      *
-     * Using using known expression
+     * Using known expression
      */
 
     public static int sumOfSquares(int n) {
@@ -237,7 +245,7 @@ public class Main {
     /**
      * Task 3.6 Integers codes of chars
      *
-     * Use only ANSI codes. Start from 33 ('!') - first valuable character and finish on 127
+     * Used only ANSI codes. Started from 33 ('!') - first valuable character and finished on 127
      */
 
     public static String charsAndInts() {
@@ -297,7 +305,9 @@ public class Main {
      */
 
     public static String commonDigitsOfNumbers(int a, int b) {
-        return Arrays.toString(("" + a + b).chars().distinct().map(Character::getNumericValue).sorted().toArray());
+        return Arrays.toString(
+            ("" + Math.abs(a) + Math.abs(b)).chars().distinct().map(Character::getNumericValue).sorted()
+                .toArray());
     }
 
     public static void main(String[] args) {
@@ -306,13 +316,13 @@ public class Main {
         System.out.println("[Task 1.3] The value of expression from task = " + calculateValueP1T3(1, 2));
         System.out.println("[Task 1.4] Swap the parts of number: " + swapIntegerWithDecimal(123.456));
         System.out.println("[Task 1.5] Transformation seconds to pattern: " + transformSecondsToPattern(123456));
-        System.out.println("[Task 1.6] Point in area? Answer:  " + checkPointInArea(1, 2));
+        System.out.println("[Task 1.6] Point in area? Answer: " + checkPointInArea(1, 2));
         System.out.println("[Task 2.1] Check the triangle: " + checkTriangle(30, 60));
         System.out.println("[Task 2.2] The value of expression from task = " + findMaxFromMin(1, 2, 3, 4));
         System.out.println("[Task 2.3] Is three points on a line? Answer: "
             + isThreePointsOnLine(1, 2, 3, 4, 5, 6));
         System.out.println("[Task 2.4] Can the brick move though the hole? Answer: "
-            + brickThroughHole(1, 2, 3, 4, 5));
+            + brickThroughHole(1, 2, 3, 4, 6));
         System.out.println("[Task 2.5] The value of expression from task = " + calculateValueP2T5(3));
         // Console input
         //System.out.println("[Task 3.1] Sum of consecutive numbers = " + sumOfConsecutiveNumbers());
@@ -325,5 +335,4 @@ public class Main {
         //System.out.println("[Task 3.7] Dividers of segment: \n" + dividersOfSegment());
         System.out.println("[Task 3.8] Common digits in two numbers: " + commonDigitsOfNumbers(123, 123456));
     }
-
 }
