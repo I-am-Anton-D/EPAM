@@ -107,7 +107,6 @@ public class Decomposition {
         System.out.println("-----------------------------------------------");
     }
 
-
     /**
      * Task 6. Check mutually prime of 3 numbers
      */
@@ -222,8 +221,8 @@ public class Decomposition {
 
     public static void digitsInNumbers(int a, int b) {
         System.out.printf("[Task 11] Count of digits in %d and %d%n", a, b);
-        System.out.printf("In number %d - %d digits%n", a, (""+a).length());
-        System.out.printf("In number %d - %d digits%n", b, (""+b).length());
+        System.out.printf("In number %d - %d digits%n", a, ("" + a).length());
+        System.out.printf("In number %d - %d digits%n", b, ("" + b).length());
         System.out.println("-----------------------------------------------");
     }
 
@@ -235,10 +234,10 @@ public class Decomposition {
      */
 
     public static void arrayT12(int k, int n) {
-        System.out.printf("[Task 12] Numbers with sum of digits = %d and <= %d%n", k,n);
+        System.out.printf("[Task 12] Numbers with sum of digits = %d and <= %d%n", k, n);
         StringBuilder sb = new StringBuilder("Numbers: " + k + ": ");
-        for (int i = 0; i <=n ; i++) {
-            int sumOfDigits = (i+"").chars().map(Character::getNumericValue).sum();
+        for (int i = 0; i <= n; i++) {
+            int sumOfDigits = (i + "").chars().map(Character::getNumericValue).sum();
             if (sumOfDigits == k) {
                 sb.append(i).append(" ");
             }
@@ -249,12 +248,13 @@ public class Decomposition {
 
     /**
      * Task 13. Twins of segment
+     *
      * @param n - segment from n tp 2*n
      */
 
-    public static void twinsNumber(int n ) {
+    public static void twinsNumber(int n) {
         System.out.println("[Task 13] Twins numbers");
-        for (int i = n; i <=2*n ; i++) {
+        for (int i = n; i <= 2 * n; i++) {
             System.out.println("Twins for " + i + ": " + Arrays.toString(getTwins(i)));
         }
         System.out.println("-----------------------------------------------");
@@ -265,16 +265,17 @@ public class Decomposition {
      */
 
     public static int[] getTwins(int n) {
-        return new int [] {n-1, n+1};
+        return new int[]{n - 1, n + 1};
     }
 
     /**
      * Task 14. Armstrong numbers from 1 to k
+     *
      * @param k - border of search
      */
 
     public static void getArmstrongNumbers(int k) {
-        System.out.println("[Task 14] Armstrong numbers from 1 to "+ k + ": " + Arrays.toString(getNumbers(k)));
+        System.out.println("[Task 14] Armstrong numbers from 1 to " + k + ": " + Arrays.toString(getNumbers(k)));
         System.out.println("-----------------------------------------------");
     }
 
@@ -293,11 +294,11 @@ public class Decomposition {
             do {
                 k = input % 10;
                 int a = 1;
-                for(int j = 0; j < degree; j++) {
+                for (int j = 0; j < degree; j++) {
                     a *= k;
                 }
                 sum += a;
-            } while ( (input /= 10) > 0);
+            } while ((input /= 10) > 0);
             if (sum == i) {
                 list.add(i);
             }
@@ -313,25 +314,25 @@ public class Decomposition {
      * Degree of number
      */
 
-    public static int getDegree(int i)
-    {
+    public static int getDegree(int i) {
         int degree = 0;
         do {
             degree += 1;
-        } while ( (i /= 10) > 0);
+        } while ((i /= 10) > 0);
         return degree;
     }
 
     /**
      * Task 15. Numbers in asc sequence with n digits
+     *
      * @param n - size of sequence
      */
 
     public static void numbersInSequence(int n) {
         System.out.printf("[Task 15] Numbers in sequence with %d digits%n", n);
         StringBuilder sb = new StringBuilder("Numbers in sequence: ");
-        for (int i = 0; i <=9-n ; i++) {
-            sb.append(getSequenceOfDigits(i,n)).append(" ");
+        for (int i = 0; i <= 9 - n; i++) {
+            sb.append(getSequenceOfDigits(i, n)).append(" ");
         }
         System.out.println(sb.toString());
         System.out.println("-----------------------------------------------");
@@ -339,47 +340,51 @@ public class Decomposition {
 
     /**
      * Getting sequence of digits
+     *
      * @param k start at k
      * @param n count of digits
      */
 
     public static int getSequenceOfDigits(int k, int n) {
-        int result =0;
-        for (int i = 1; i <= n ; i++) {
-            result += (k+i) * Math.pow(10,n-i);
+        int result = 0;
+        for (int i = 1; i <= n; i++) {
+            result += (k + i) * Math.pow(10, n - i);
         }
         return result;
     }
 
     /**
      * Task 16. Find sum of numbers with odd digits and count of digits = n
+     *
      * @param n - count of digits in a number
      */
 
     public static void sumOfNumbersWithOddDigits(int n) {
         System.out.printf("[Task 16] Sum of numbers with odd digits and count of digits = %d%n", n);
         int sum = 0;
-        for (int i = (int) Math.pow(10,n-1); i <(int) Math.pow(10,n); i++) {
-            if (checkOddDigits(i,n)) {
-                sum+=i;
+        for (int i = (int) Math.pow(10, n - 1); i < (int) Math.pow(10, n); i++) {
+            if (checkOddDigits(i, n)) {
+                sum += i;
             }
         }
-        int countOfEvenNumbersInSum = (int) (""+sum).chars().map(Character::getNumericValue).filter(e->e%2==0).count();
+        int countOfEvenNumbersInSum = (int) ("" + sum).chars().map(Character::getNumericValue)
+            .filter(e -> e % 2 == 0).count();
         System.out.println("Sum = " + sum);
-        System.out.printf("In number %d - %d even digit(s)%n", sum,countOfEvenNumbersInSum);
+        System.out.printf("In number %d - %d even digit(s)%n", sum, countOfEvenNumbersInSum);
         System.out.println("-----------------------------------------------");
     }
 
     /**
      * Checking all digits in number = i and count of digits = n
+     *
      * @param i - checking number
      * @param n - count of digits
      * @return true, if all digits are odd, otherwise - false;
      */
 
     public static boolean checkOddDigits(int i, int n) {
-        int countOdd = (int) (""+i).chars().map(Character::getNumericValue).filter(e->e%2!=0).count();
-        return countOdd==n;
+        int countOdd = (int) ("" + i).chars().map(Character::getNumericValue).filter(e -> e % 2 != 0).count();
+        return countOdd == n;
     }
 
     /**
@@ -389,8 +394,8 @@ public class Decomposition {
     public static void countOfSubtraction(int n) {
         System.out.printf("[Task 17] Count of subtraction for number %d%n", n);
         int i = 0;
-        while (n>0) {
-            n-=getSumOfDigitsInNumber(n);
+        while (n > 0) {
+            n -= getSumOfDigitsInNumber(n);
             i++;
         }
         System.out.println("Count of subtraction = " + i);
@@ -402,7 +407,7 @@ public class Decomposition {
      */
 
     public static int getSumOfDigitsInNumber(int n) {
-        return (""+n).chars().map(Character::getNumericValue).sum();
+        return ("" + n).chars().map(Character::getNumericValue).sum();
     }
 
     public static void main(String[] args) {
@@ -416,8 +421,8 @@ public class Decomposition {
         sumsInArray(getRandomIntsArray(1, 25, 20), 3, 6);
         squareQuadrangle(1, 2, 3, 4);
         arrayFromDigitOfNumber(123456789);
-        digitsInNumbers(123,12344566);
-        arrayT12(10,60);
+        digitsInNumbers(123, 12344566);
+        arrayT12(10, 60);
         twinsNumber(5);
         getArmstrongNumbers(10000);
         numbersInSequence(4);
