@@ -260,6 +260,4 @@ public class Main {
         airlinesHolder.filterByDayAndTime(WeekDay.Monday, new Date(System.currentTimeMillis() + random.nextInt(10000000)));
         System.out.println("-----------------------------------------------");
     }
-
-
 }
