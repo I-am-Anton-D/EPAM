@@ -226,7 +226,6 @@ public class Main {
         System.out.println("Filter by year: " );
         booksHolder.filterByYear(1983);
         System.out.println("-----------------------------------------------");
-
     }
 
     /**

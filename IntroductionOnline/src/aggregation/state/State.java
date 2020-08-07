@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class State {
     private String name;
-    private City capital;
-    private ArrayList<Region> regions = new ArrayList<>();
+    private final City capital;
+    private final ArrayList<Region> regions = new ArrayList<>();
 
     public State(String name, City capital) {
         this.capital = capital;
