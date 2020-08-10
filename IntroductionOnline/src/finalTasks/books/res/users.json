@@ -1,0 +1,23 @@
+[
+    {
+        "password": "827ccb0eea8a706c4c34a16891f84e7b",
+        "name": "Admin",
+        "admin": true,
+        "id": 3,
+        "email": "email@mail.ru"
+    },
+    {
+        "password": "827ccb0eea8a706c4c34a16891f84e7b",
+        "name": "User1",
+        "admin": false,
+        "id": 4,
+        "email": "u1@mail.ru"
+    },
+    {
+        "password": "827ccb0eea8a706c4c34a16891f84e7b",
+        "name": "User2",
+        "admin": false,
+        "id": 5,
+        "email": "u2@mail.ru"
+    }
+]
