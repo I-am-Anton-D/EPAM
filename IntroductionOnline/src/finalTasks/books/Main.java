@@ -3,28 +3,37 @@ package finalTasks.books;
 import finalTasks.books.auth.UserService;
 import finalTasks.books.book.Book;
 import finalTasks.books.book.BookService;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.json.simple.parser.ParseException;
+
+/**
+ * Main login in console
+ */
 
 public class Main {
 
-    private static final int LIMIT = 8;
-    private static UserService userService = new UserService();
-    private static BookService bookService = new BookService();
-    private static int offset = 0;
-    private static Scanner scanner = new Scanner(System.in);
+    private static final int LIMIT = 8; //Limit of books on 1 page
+    private static int offset = 0; // Starting offset. Using for pagination
+    private static final UserService userService = new UserService();
+    private static final BookService bookService = new BookService();
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException, ParseException {
+    /**
+     * Just greeting
+     */
+
+    public static void main(String[] args) {
         System.out.println("Welcome to HOME BOOK LIBRARY");
         while (true) {
             greeting();
         }
     }
 
-    public static void greeting() throws ParseException, IOException {
+    /**
+     * Login / logout and main operation cycle
+     */
 
+    public static void greeting() {
         if (!userService.isAuth()) {
             System.out.println("Enter login and password (two strings separating by space): ");
             String input = scanner.nextLine();
@@ -83,6 +92,10 @@ public class Main {
         }
     }
 
+    /**
+     * Offer book to admin
+     */
+
     private static void offerBook() {
         Book book = new Book();
         System.out.println("Enter the name of book: ");
@@ -103,7 +116,11 @@ public class Main {
         userService.sentBookToAdmin(book);
     }
 
-    private static void addBook() throws IOException {
+    /**
+     * Add book by admin
+     */
+
+    private static void addBook() {
         Book book = new Book();
         System.out.println("Enter the name of book: ");
         String input = scanner.nextLine();
@@ -116,11 +133,7 @@ public class Main {
         book.setAuthor(input);
         System.out.println("It's ebook? 1 - YES, 0 - NO");
         input = scanner.nextLine();
-        if (input.equals("1")) {
-            book.setEbook(true);
-        } else {
-            book.setEbook(false);
-        }
+        book.setEbook(input.equals("1"));
 
         if (book.isEbook()) {
             System.out.println("Enter a link: ");
@@ -135,6 +148,10 @@ public class Main {
         userService.sentToAll(book.getName());
     }
 
+    /**
+     * Search book by query
+     */
+
     private static void searchBook() {
         System.out.println("Enter query: ");
         String input = scanner.nextLine();
@@ -148,7 +165,11 @@ public class Main {
         scanner.nextLine();
     }
 
-    private static void listLibrary() throws IOException {
+    /**
+     * Listing library
+        */
+
+    private static void listLibrary() {
         while (true) {
             System.out.println("Offset = " + offset + ", Limit = " + LIMIT);
             bookService.getBooks(offset, LIMIT).forEach(System.out::println);
@@ -193,7 +214,11 @@ public class Main {
         }
     }
 
-    private static void modifyById() throws IOException {
+    /**
+     * Change book by id
+     */
+
+    private static void modifyById() {
         System.out.println("Enter id of book: ");
         String input = scanner.nextLine();
         int i = 0;
@@ -235,6 +260,10 @@ public class Main {
         scanner.nextLine();
     }
 
+    /**
+     * Get link by id (if it's ebook)
+     */
+
     private static void getLinkById() {
         System.out.println("Enter id of book: ");
         String input = scanner.nextLine();
@@ -257,5 +286,4 @@ public class Main {
         System.out.println("Press Enter to continue");
         scanner.nextLine();
     }
-
 }

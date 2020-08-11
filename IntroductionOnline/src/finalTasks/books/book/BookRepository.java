@@ -12,11 +12,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * Some Crud repository for book entity
+ */
+
 public class BookRepository {
 
-    public static final String JSON_PATH = "src\\finalTasks\\books\\res\\books.json";
+    public static final String JSON_PATH = "src\\finalTasks\\books\\res\\books.json"; //path to JSON file
     private final ArrayList<Book> books = new ArrayList<>();
 
+    /**
+     * Parse JSON file and save it to array list
+     */
     public BookRepository() {
         if (!getJsonFile().isEmpty()) {
             JSONParser parser = new JSONParser();
@@ -36,33 +43,60 @@ public class BookRepository {
         }
     }
 
-    public void addBook(Book book) throws IOException {
-        if (book.getId()==-1) {
-            book.setId(books.size()+1);
+    /**
+     * Adding new book ant try to generate unique id
+     */
+
+    public void addBook(Book book) {
+        if (book.getId() == -1) {
+            book.setId(books.size() + 1);
         }
         books.add(book);
         saveToFile();
     }
 
+    /**
+     * Find book by id
+     */
+
     public Book getBookById(int id) {
-        return books.stream().filter(b->b.getId()==id).findFirst().orElse(null);
+        return books.stream().filter(b -> b.getId() == id).findFirst().orElse(null);
     }
+
+    /**
+     * Return array list of books
+     */
 
     public ArrayList<Book> getBooks() {
         return books;
     }
 
+    /**
+     * Size of library
+     */
+
     public int size() {
         return books.size();
     }
 
-    private void saveToFile() throws IOException {
+    /**
+     * Save array list to JSON file. Using when added new book or modified
+     */
+    private void saveToFile() {
         JSONArray jsonArray = new JSONArray();
-        books.forEach(b->{
+        books.forEach(b -> {
             jsonArray.add(transformUserToJson(b));
         });
-        Files.writeString(Path.of(JSON_PATH),jsonArray.toJSONString());
+        try {
+            Files.writeString(Path.of(JSON_PATH), jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    /**
+     * Transform book object to JSON object
+     */
 
     private JSONObject transformUserToJson(Book book) {
         JSONObject jsonObject = new JSONObject();
@@ -75,6 +109,10 @@ public class BookRepository {
         return jsonObject;
     }
 
+    /**
+     * Read JSON file
+     */
+
     private static String getJsonFile() {
         StringBuilder builder = new StringBuilder();
         try {
@@ -86,8 +124,12 @@ public class BookRepository {
         return builder.toString();
     }
 
-    public void saveBook(Book book) throws IOException {
-        for (int i = 0; i <books.size() ; i++) {
+    /**
+     * Save info about book after update
+     */
+
+    public void saveBook(Book book) {
+        for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getId() == book.getId()) {
                 books.set(i, book);
                 saveToFile();
@@ -97,9 +139,17 @@ public class BookRepository {
 
     }
 
+    /**
+     * Search book by query. Search in name, desc and author
+     */
+
     public ArrayList<Book> search(String query) {
-        if (query.isEmpty()) return null;
-        return (ArrayList<Book>) books.stream().filter(b->b.getName().contains(query) || b.getDesc().contains(query) || b.getAuthor().contains(query)).collect(
-            Collectors.toList());
+        if (query.isEmpty()) {
+            return null;
+        }
+        return (ArrayList<Book>) books.stream().filter(
+            b -> b.getName().contains(query) || b.getDesc().contains(query) || b.getAuthor().contains(query))
+            .collect(
+                Collectors.toList());
     }
 }

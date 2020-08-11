@@ -23,18 +23,21 @@ import org.json.simple.parser.ParseException;
 
 public class UserRepository {
 
-    public static final String JSON_PATH = "src\\finalTasks\\books\\res\\users.json";
+    public static final String JSON_PATH = "src\\finalTasks\\books\\res\\users.json"; //Path to JSON file
     private final ArrayList<User> users = new ArrayList<>();
 
+    /**
+     * Load data from file. Parse JSON file
+     */
     public UserRepository()  {
         if (!getJsonFile().isEmpty()) {
             JSONParser parser = new JSONParser();
-            JSONArray jsonData = null;
+            JSONArray jsonData;
             try {
                jsonData = (JSONArray) parser.parse(getJsonFile());
             } catch (ParseException e) {
-                e.printStackTrace();
-                return;
+               e.printStackTrace();
+               return;
             }
 
             jsonData.forEach(jsonUser -> {
@@ -46,32 +49,62 @@ public class UserRepository {
         }
     }
 
-    public void addUser(User user) throws IOException {
+    /**
+     * Add new User. No access from console.
+     */
+
+    public void addUser(User user) {
         if (getUserByEmail(user.getEmail())==null) {
             users.add(user);
             saveToFile();
         }
     }
 
+    /**
+     * Find user by id
+     */
+
     public User getUserById(int id) {
         return users.stream().filter(u->u.getId()==id).findFirst().orElse(null);
     }
+
+
+    /**
+     * Return array list of users. Using for main sending
+     */
 
     public ArrayList<User> getUsers() {
         return users;
     }
 
+    /**
+     * Getiing user by email
+     */
+
     public User getUserByEmail(String email) {
         return users.stream().filter(u->u.getEmail().equals(email)).findFirst().orElse(null);
     }
 
-    private void saveToFile() throws IOException {
+    /**
+     * Record array list by JSON file
+     */
+
+    private void saveToFile()  {
         JSONArray jsonArray = new JSONArray();
         users.forEach(u->{
             jsonArray.add(transformUserToJson(u));
         });
-        Files.writeString(Path.of(JSON_PATH),jsonArray.toJSONString());
+        try {
+            Files.writeString(Path.of(JSON_PATH),jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    /**
+     * Transform user object to JSON object
+     */
 
     private JSONObject transformUserToJson(User user) {
         JSONObject jsonObject = new JSONObject();
@@ -84,6 +117,10 @@ public class UserRepository {
     }
 
 
+    /**
+     * Read file
+     */
+
     private static String getJsonFile() {
         StringBuilder builder = new StringBuilder();
         try {
@@ -94,6 +131,10 @@ public class UserRepository {
         }
         return builder.toString();
     }
+
+    /**
+     * Encode string ti MD5
+     */
 
     public static String getMD5(String string) {
         MessageDigest m = null;
@@ -116,6 +157,10 @@ public class UserRepository {
         }
         return hashtext.toString();
     }
+
+    /**
+     * Find fist admin to sent offer of book
+     */
 
     public String getAdminEmail() {
         User user = users.stream().filter(User::isAdmin).findFirst().orElse(null);

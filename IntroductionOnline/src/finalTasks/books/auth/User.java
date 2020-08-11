@@ -31,7 +31,6 @@ public class User {
         return email;
     }
 
-
     public boolean isAdmin() {
         return admin;
     }

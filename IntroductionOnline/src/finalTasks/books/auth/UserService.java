@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 import org.json.simple.parser.ParseException;
 
 /**
- * Service for user
+ * Service for user. Class saved status of auth and role of user
  */
 
 public class UserService {
@@ -21,8 +21,13 @@ public class UserService {
     private boolean admin = false;
     UserRepository userRepository = new UserRepository();
 
-    public void login(String email, String password) throws ParseException {
+    /**
+     * Login method. Check mail and password matches
+     * @param email of user
+     * @param password of user
+     */
 
+    public void login(String email, String password) {
         User user = userRepository.getUserByEmail(email);
         if (user != null && user.getPassword().equals(UserRepository.getMD5(password))) {
             auth = true;
@@ -30,22 +35,43 @@ public class UserService {
         }
     }
 
+    /**
+     * Just standard getter
+     */
+
     public boolean isAuth() {
         return auth;
     }
+
+    /**
+     * Just standard getter
+     */
 
     public boolean isAdmin() {
         return admin;
     }
 
+    /**
+     * Log out of user
+     */
     public void logout() {
         auth = false;
         admin = false;
     }
 
+    /**
+     * Sent email to all users about new book
+     * @param name - name of book
+     */
+
     public void sentToAll(String name) {
         userRepository.getUsers().forEach(u->sentEmail(u.getEmail(), name));
     }
+
+    /**
+     * Sent email to admin for offer new book
+     * @param book
+     */
 
     public void sentBookToAdmin(Book book) {
         String email = userRepository.getAdminEmail();
@@ -59,8 +85,6 @@ public class UserService {
      * @param email to sent
      * @param name of book
      */
-
-
 
     private void sentEmail(String email, String name) {
         return;

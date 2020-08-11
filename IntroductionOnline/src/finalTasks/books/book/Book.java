@@ -12,9 +12,23 @@ public class Book {
     private boolean ebook;
     private String link;
 
+
+    /**
+     * Creating new book. id = -1 - is's flag to autoincrement
+     */
     public Book() {
         this.id = -1;
     }
+
+    /**
+     * Normal full constructor for book
+     * @param id of book. Need to be unique
+     * @param name of book
+     * @param desc short description of book
+     * @param author ot the book
+     * @param ebook flag of electronic book
+     * @param link to the ebook. Empty if book real
+     */
 
     public Book(int id, String name, String desc, String author, boolean ebook, String link) {
         this.id = id;

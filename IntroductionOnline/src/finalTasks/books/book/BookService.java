@@ -1,12 +1,15 @@
 package finalTasks.books.book;
 
-import java.io.IOException;
 import java.util.ArrayList;
+
+/**
+ * Service for book entity
+ */
 
 public class BookService {
     BookRepository bookRepository = new BookRepository();
 
-    public void addBook(Book book) throws IOException {
+    public void addBook(Book book) {
         bookRepository.addBook(book);
     }
 
@@ -30,14 +33,11 @@ public class BookService {
         return bookRepository.getBookById(id);
     }
 
-    public void saveBook(Book book) throws IOException {
+    public void saveBook(Book book) {
         bookRepository.saveBook(book);
     }
 
     public ArrayList<Book> search(String query) {
         return  bookRepository.search(query);
     }
-
-
-
 }
