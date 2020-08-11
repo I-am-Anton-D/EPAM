@@ -1,6 +1,5 @@
 package finalTasks.notepad;
 
-import finalTasks.books.book.Book;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Predicate;
-import javax.sound.midi.Soundbank;
 
 public class Main {
 
