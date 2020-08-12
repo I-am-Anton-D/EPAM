@@ -8,13 +8,20 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
+/**
+ * Main class and method for console application
+ */
+
 public class Main {
 
-
-    private static final NoteRepository noteRepository = new NoteRepository();
-    private static final int LIMIT = 5;
-    private static int offset = 0;
+    private static final NoteRepository noteRepository = new NoteRepository(); //Repository of notes
+    private static final int LIMIT = 5; //Count of notes on page
+    private static int offset = 0; //Starting offset. Using for pagintaion
     private static final Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Just greeting
+     */
 
     public static void main(String[] args) {
         System.out.println("Welcome to notepad");
@@ -22,6 +29,10 @@ public class Main {
             greeting();
         }
     }
+
+    /**
+     * Main menu
+     */
 
     private static void greeting() {
         System.out.println("[1] List notes");
@@ -54,9 +65,14 @@ public class Main {
         }
     }
 
+    /**
+     * Search menu. Searching bu subject, email, msg and date. All conditions can be combine with logical AND
+     */
     private static void searchNote() {
+        //List of predicates
         ArrayList<Predicate<Note>> predicates = new ArrayList<>();
 
+        //Search by subject menu
         System.out.println("Search by subject? 1 - YES, 0 - NO");
         String input = scanner.nextLine();
         int i = -1;
@@ -75,6 +91,7 @@ public class Main {
             }
         }
 
+        //Search by email menu and check it by regex
         System.out.println("Search by email? 1 - YES, 0 - NO");
         input = scanner.nextLine();
         i = -1;
@@ -93,6 +110,7 @@ public class Main {
             }
         }
 
+        //Search by date menu
         System.out.println("Search by date? 1 - YES, 0 - NO");
         input = scanner.nextLine();
         i = -1;
@@ -116,6 +134,7 @@ public class Main {
             }
         }
 
+        //Search by query in message menu
         System.out.println("Search by msg? 1 - YES, 0 - NO");
         input = scanner.nextLine();
         i = -1;
@@ -134,6 +153,7 @@ public class Main {
             }
         }
 
+        //Final search and output
         if (predicates.size()==0) {
             System.out.println("No parameters to search");
             return;
@@ -149,6 +169,9 @@ public class Main {
         scanner.nextLine();
     }
 
+    /**
+     Add note menu and chek email
+     */
     private static void addNote() {
 
         Note note = new Note();
@@ -180,6 +203,10 @@ public class Main {
         System.out.println("Press Enter to continue");
         scanner.nextLine();
 }
+
+    /**
+     * Listing notes with pagination
+     */
 
     private static void listNotes() {
         while (true) {
@@ -236,10 +263,18 @@ public class Main {
         }
     }
 
+    /**
+     * Sort notes by comparator
+     * @param comparator - specific comparator
+     */
     private static void sort(Comparator<Note> comparator) {
         noteRepository.sort(comparator);
         offset = 0;
     }
+
+    /**
+     * Delete note menu
+     */
 
     private static void deleteNote() {
         System.out.println("Enter id of note: ");
@@ -260,6 +295,10 @@ public class Main {
         System.out.println("Press Enter to continue");
         scanner.nextLine();
     }
+
+    /**
+     * Update note menu
+     */
 
     private static void updateNote() {
         System.out.println("Enter id of note: ");
